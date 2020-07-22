@@ -1,0 +1,192 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc} % per le lettere accentate
+\usepackage{graphicx} % per l'inserimento di immagini e grafici
+\usepackage{booktabs} % per gestire le tabelle
+\usepackage{amsmath}
+\usepackage{subfig}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{float}
+%\usepackage{lmodern}
+%\usepackage{xcolor}
+%\usepackage{fancyvrb}
+\newcommand{\e}[1]{\cdot 10^{#1}} % definisco un nuovo comando per poter scrivere la notazione scientifica rapidamente
+\lstset{language=Fortran}
+\begin{document}
+%\SweaveOpts\ref{concordance=TRUE}
+\author{Simone Brazioli}
+\title{Secondo Esercizio per Esame di Calcolo per l'Astronomia}
+\date{A.A. 2019-2020}
+
+
+
+\section{Introduzione}
+L'equazione di \textbf{Lane-Emden} è una forma adimensionale della equazione di \textbf{Poisson} che studia il potenziale gravitazionale di un fluido \emph{politropico}, a simmetria sferica e autogravitante.
+
+A livello matematico, l'equazione di Lane-Emden è un'equazione adimensionale differenziale ordinaria al secondo ordine (\textbf{ODE2}) e viene utilizzata in Astrofisica per modellare la struttura interna di una stella. 
+
+L'equazione è valida a condizione di due assunzioni di partenza:
+
+\begin{itemize}
+\item il gas che la compone la struttura stellare deve essere in equilibrio idrostatico con la gravità;
+\item la pressione del gas e la sua densità devono avere una relazione di tipo \emph{politropico}.
+\end{itemize}
+
+Se le condizioni sono verificate allora è possibile scrivere una relazione adimensionale della densità (o pressione) del gas in funzione del raggio:
+
+\begin{equation}\label{eqn:LEE}
+ \frac{1}{\xi}\frac{d}{d\xi}\left ( \xi^2\frac{d\theta}{d\xi} \right ) = -\theta^n
+\end{equation}
+
+in cui:
+\begin{itemize}
+ \item $\xi$ è il raggio adimensionalizzato;
+ \item $\theta$ è legata alla densità (e quindi alla pressione) tramite la relazione $$\rho = \rho_c \theta^n$$ dove $\rho_c$ è la densità centrale ed $n$ è l'indice politropico che compare nell'equazione politropica di stato:
+ \begin{equation}
+  P = K\rho^{1+\frac{1}{n}}
+ \end{equation}
+ in cui $P$ è la pressione, $\rho$ è la densità e $K$ è una costante di proporzionalità.
+\end{itemize}
+
+
+
+\section{Derivazione dell'equazione di Lane-Emden}
+
+L'equazione di Lane-Emden può essere derivata a partire dall'equazione di Poisson, oppure sfruttando l'equilibrio idrostatico. In questa relazione utilizzerò il secondo approccio.
+
+Per derivare l'equazione di Lane-Emden utilizzando l'equilibrio idrostatico, dobbiamo partire da tre equazioni fisiche:
+
+\begin{itemize}
+ \item Equazione di Conservazione della Massa;
+ \item Equazione dell'Equilibrio Idrostatico;
+ \item Relazione Politropica tra Pressione e Densità.
+\end{itemize}
+
+
+\subsection{Equazione della Conservazione della Massa}
+
+L'equazione della conservazione della massa descrive come varia la massa $M$ all'interno di un determinato raggio sferico $r$ caratterizzato da una densità $\rho$.
+
+\begin{equation}\label{eqn:MCE}
+ \frac{dM}{dr} = 4\pi \rho r^2
+\end{equation}
+
+\subsection{Equazione dell'Equilibrio Idrostatico}
+
+L'equazione dell'equilibrio idrostatico esprime come, in una situazione di equilibrio dinamico, l'attrazione gravitazionale agente sul gas (\emph{RHS}) sia bilanciata dal gradiente di pressione del gas (\emph{LHS}). In questa equazione troviamo la pressione $P$, la densità $\rho$, la costante di gravitazione universale $G$, il raggio $r$ e la massa totale $M$ entro il raggio.
+
+\begin{equation}\label{eqn:HSE}
+ \frac{dP}{dr} = - \frac{GM}{r^2}\rho
+\end{equation}
+
+\subsection{Relazione Politropica}
+
+L'equazione di stato del gas politropico rappresenta la dipendenza della pressione $P$ dalla densità $\rho$ in un modello politropico. Si tratta di una legge di potenza con esponente $\frac{n+1}{n}$ e costante di proporzionalità $K$.
+
+\begin{equation}\label{eqn:PSE}
+ P = K\rho^{(n+1)/n}
+\end{equation}
+
+\subsection{Derivazione Equazione L-E}
+
+Per ottenere la ODE2 di L-E partiamo dall'equazione dell'equilibrio idrostatico $\frac{dP}{dr} = -\frac{GM(r)}{r^2}\rho$ e isoliamo il termine relativo alla massa. Esplicito le dipendenze di ogni funzione, per mostrare la derivazione correttamente.
+
+\begin{equation*}
+ \frac{1}{\rho(r)}\frac{dP(r)}{dr} = -\frac{GM(r)}{r^2}
+\end{equation*}
+
+Procedo derivando entrambi i membri rispetto al raggio $r$.
+
+\begin{equation*}
+\frac{d}{dr}\left ( \frac{1}{\rho(r)}\frac{dP(r)}{dr}\right ) = \frac{2GM(r)}{r^3} - \frac{dM(r)}{dr}\frac{G}{r^2}
+\end{equation*}
+
+A questo punto, noto che nell'equazione ora ottenuta, compare il termine $\frac{dM(r)}{dr}$ che rappresenta la variazione della massa in funzione del raggio. In altre parole, posso sostituire il \emph{RHS} dell'equazione della conservazione della massa
+\begin{equation*}
+ \frac{dM(r)}{dr} = 4\pi \rho r^2
+\end{equation*}
+nell'equazione appena derivata\footnote{Ometto ora le dipendenze delle funzioni per semplificare la notazione.}.
+
+\begin{equation*}
+ \frac{d}{dr}\left ( \frac{1}{\rho}\frac{dP}{dr} \right ) = \frac{2GM}{r^3} - 4\pi\rho r^2 \frac{G}{r^2}
+\end{equation*}
+
+Il termine $$\frac{GM}{r^3}$$ nel primo termine del $LHS$ ricorda da vicino l'equazione stessa dell'equilibrio idrostatico. Facendo attenzione a bilanciare i valori mancanti o 
+presenti in eccesso, posso sostituire il termine indicato con $dP/dr$ dall'equazione \ref{eqn:HSE}. Approfitto per eseguire alcune semplificazioni.
+
+L'equazione risultante sarà:
+
+\begin{equation}\label{eqn:temp1}
+ \frac{d}{dr}\left ( \frac{1}{\rho}\frac{dP}{dr} \right ) = \frac{2}{r\rho}\frac{dP}{dr} - 4\pi G \rho
+\end{equation}
+
+A questo punto opero le seguenti sostituzioni, volte ad adimensionalizzare le variabili coinvolte nell'equazione.
+
+\begin{itemize}
+\item
+\begin{equation}\label{eqn:rhoc}
+ \rho = \rho_c \theta^n
+\end{equation}
+In questa sostituzione sfrutto $\rho_c$, la densità centrale della stella (pertanto costante), per adimensionalizzare la densità e ottenere, quindi, $\theta$ che sarà presente nella equazione finale.
+\item
+\begin{equation}\label{eqn:rXi}
+ r = a\xi
+\end{equation}
+Con questa sostituzione facciamo una cosa analoga alla precedente: utilizzando una costante $a$, chiamata \emph{scala delle lunghezze} otteniamo la variabile $\xi$ che rappresenta il raggio stellare adimensionalizzato.
+\end{itemize}
+
+Adoperiamo queste sostituzioni nell'equazione di stato politropica \ref{eqn:PSE} e otteniamo:
+\begin{equation}\label{eqn:PPol}
+ P=K\rho_c^{(n+1)/n}\theta^{n+1}
+\end{equation}
+
+Devo derivare rispetto la \ref{eqn:PPol} rispetto a $r$ per inserirla nella mia equazione di lavoro \ref{eqn:temp1}. Noto che l'unico termine che subisce la derivazione è $\theta$:
+\begin{equation}\label{eqn:dPPol}
+ \frac{dP}{dr} = K\rho_c^{(n+1)/n}\left ( n+1 \right ) \theta^n \frac{d\theta}{dr}
+\end{equation}
+
+Inserite le sostituzioni \ref{eqn:dPPol} e \ref{eqn:rhoc} nell'equazione \ref{eqn:temp1} e dividendo entrambi i membri per $r^2$ otteniamo:
+
+\begin{equation*}
+ \frac{1}{r^2}\frac{d}{dr}\left ( \frac{r^2}{\rho_c \theta^n} \rho_c^{(n+1)/n} \left ( n+1 \right )\theta^n \frac{d\theta}{dr} \right ) = -4\pi G \rho_c \theta^n
+\end{equation*}
+
+Semplificando i termini simili e portando tutto a primo membro ottengo:
+
+\begin{equation*}
+ \frac{K\rho_c^{1/n}\left ( n+1 \right )}{4\pi G \rho_c} \frac{1}{r^2} \frac{d}{dr}\left (r^2\frac{d\theta}{dr} \right )+ \theta^n = 0
+\end{equation*}
+
+Sarà facile ora applicare la sostituzione \ref{eqn:rXi} per $r$ e la sostituzione 
+\begin{equation}\label{eqn:drXi}
+ dr = ad\xi
+\end{equation}
+per avere l'espressione:
+
+\begin{equation*}
+ \frac{K\rho_c^{1/n}\left ( n+1 \right )}{4\pi G \rho_c} \frac{1}{a^2\xi^2} \frac{d}{a\; d\xi}\left (a^2\xi^2\frac{d\theta}{a\; d\xi} \right )+ \theta^n = 0
+\end{equation*}
+
+La $a$ è una costante, quindi non viene toccata dalle derivate e possiamo semplificare, ove necessario, e portare fuori, per ottenere l'equazione\footnote{In questo passaggio compatto le $\rho_c$ del primo termine.}:
+\begin{equation*}
+ \frac{K\rho_c^{\frac{1}{n} -1}\left ( n+1 \right )}{4\pi G a^2} \frac{1}{\xi^2} \frac{d}{d\xi}\left (\xi^2\frac{d\theta}{d\xi} \right )+ \theta^n = 0
+\end{equation*}
+
+Per concludere, affinchè l'equazione così derivata sia l'equazione di Lane-Emden \ref{eqn:LEE}, deve avvenire che:
+\begin{equation*}
+ \frac{K\rho_c^{\frac{1}{n}-1}\left ( n+1 \right )}{4\pi G a^2} = 1
+\end{equation*}
+
+Questo comporta la scelta della scala delle lunghezze $a$ definito come:
+\begin{equation}\label{eqn:aSL}
+ a = \sqrt{\frac{K\rho_c^{\frac{1}{n}-1} \left ( n+1 \right )}{4\pi G}} 
+\end{equation}
+
+Abbiamo quindi ottenuto la equazione 
+\begin{equation*}
+ \frac{1}{\xi^2}\frac{d}{d\xi} \left ( \xi^2 \frac{d\theta}{d\xi} \right ) + \theta^n = 0
+\end{equation*}
+
+del tutto uguale all'equazione \ref{eqn:LEE}.
+
+\end{document}
