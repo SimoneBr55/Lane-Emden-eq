@@ -19,7 +19,7 @@ It is valid under two main assumptions:
   1. the gas forming the stellar structure must be in hydrostatic equilibrium with gravity;
   2. the pressure of the gas and its density must be related by a politropic equation of state.
   
-If these conditions are met, we can write a dimensionless equation linking the denity (or pressure) with the radius of the star (or the structure, in general).
+If these conditions are met, we can write a dimensionless equation linking the density (or pressure) with the radius of the star (or the structure, in general).
 
 1/&xi; d/d&xi; ( &xi; <sup>2</sup> d&theta; / d&xi; ) = - &theta; <sup>n</sup>
 
