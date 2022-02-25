@@ -10,7 +10,7 @@ It basically
  
 # Astrophysical Problem
 
-Lane-Emden Equation (LEE) is a dimensionless form of the Poisson Equation which studies the gravitational potential of a politropic fluid, under the condition of it begin spherical symmetrical and self-gravitating.
+Lane-Emden Equation (LEE) is a dimensionless form of the Poisson Equation which studies the gravitational potential of a politropic fluid, under the condition of it begin spherically symmetrical and self-gravitating.
 
 Mathematically, LEE is a 2nd Order Ordinary Differential Equation (ODE2) and is useful in Astrophysics to model the internal structure of a star.
 
